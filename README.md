@@ -25,26 +25,7 @@ Lazybones allows you to create a new project structure for any framework or libr
 
 If you want more information about lazybones project check it out [here](https://github.com/pledbrook/lazybones/) and [here](https://github.com/pledbrook/lazybones/wiki/Template-developers-guide)
 
-### 1.4 Configure Gradle proxy
-
-> **Note:**
-If you are behind a HTTP or HTTPS proxy server, you will need to create a file called _gradle.properties_ in the /$HOME/.gradle directory, add the file the following properties:
->
-
-```ini
-org.gradle.jvmargs=-Xmx1536m
-systemProp.http.proxyHost=proxy.campos.rj.gov.br
-systemProp.http.proxyPort=80
-systemProp.http.nonProxyHosts=localhost
-systemProp.http.auth.ntlm.domain=domain
-
-systemProp.https.proxyHost=proxy.campos.rj.gov.br
-systemProp.https.proxyPort=80
-systemProp.https.nonProxyHosts=localhost
-systemProp.https.auth.ntlm.domain=domain
-```
-
-### 1.5 Create Java projects directory
+### 1.4 Create Java projects directory
 
 Open the terminal and execute the commands below:
 
@@ -52,7 +33,7 @@ Open the terminal and execute the commands below:
 mkdir -p $HOME/Projects/Java
 ```
 
-### 1.6 Cloning java-templates repository
+### 1.5 Cloning java-templates repository
 
 Open the terminal and execute the commands below:
 
@@ -61,7 +42,7 @@ cd $HOME/Projects/Java
 git clone https://github.com/CIDAC/java-templates.git
 ```
 
-### 1.7 Installing the templates
+### 1.6 Installing the templates
 
 Open the terminal and execute the commands below:
 
@@ -76,7 +57,7 @@ To see if the templates were installed:
 lazybones list --cache
 ```
 
-### 1.8 Configuring Microsoft Visual Studio Code (VS Code)
+### 1.7 Configuring Microsoft Visual Studio Code (VS Code)
 
 If you want to use Microsoft Visual Studio Code (VS Code) follow the instructions bellow to configure the Editor.
 
