@@ -1,0 +1,66 @@
+version: '3.5'
+
+services:
+  
+  database:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-${artifact}:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - 'application-network'
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=mydb  # You should choose a better name for your database. 
+                          # Do not forget to change the url propertie in the app SPRING_DATASOURCE_URL environment
+  pgadmin:
+    image: thajeztah/pgadmin4
+    container_name: pgadmin4
+    ports:
+      - "5050:5050"
+    volumes:
+      - pgadmin-${artifact}:/pgadmin
+    depends_on:
+      - database
+    networks:
+      - 'application-network'
+
+  app:
+    image: ${artifact}
+    container_name: webapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+      - pgadmin
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mydb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_H2_CONSOLE_ENABLED=false
+    networks:
+      - 'application-network'
+
+  test:
+    image: gradle:4.9.0-jdk8-alpine
+    container_name: gradletest
+    volumes:
+      - \$HOME/.gradle:/home/gradle/.gradle
+      - .:/home/gradle
+    command: gradle test -Pjenv=test --stacktrace
+
+networks:
+  application-network:
+    driver: bridge
+
+volumes:
+  pgdata-${artifact}:
+  pgadmin-${artifact}:

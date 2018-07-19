@@ -1,0 +1,34 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    properties:
+      hibernate:
+        default_schema: $artifact
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+
+  #https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html
+  datasource:
+    max-active: 5
+    max-idle: 1
+    min-idle: 1
+    initial-size: 1
+    testOnBorrow: true
+    validationQuery: SELECT 1
+
+flyway:
+  schemas: $artifact
+
+endpoints:
+  beans:
+    sensitive: false
+
+management:
+  security:
+    enabled: false
+
+server:
+  proxy-peer-address: true

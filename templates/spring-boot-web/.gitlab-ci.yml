@@ -1,0 +1,34 @@
+
+stages:
+  - test
+  - build
+  - cleanup
+  
+image: gradle:4.9.0-jdk8-alpine
+
+test:
+  stage: test
+  artifacts:
+    paths:
+      - build/reports/
+  script:
+    - gradle test --info --stacktrace
+
+build_job:
+  stage: build
+  script:
+    - gradle build -x test
+  artifacts:
+    paths:
+      - build/libs/*.jar
+  when: on_success
+  dependencies:
+    - test
+
+cleanup_build:
+  stage: cleanup
+  script:
+    - rm -fR build/classes/ build/resources/ build/tmp/
+  when: on_failure
+  dependencies:
+    - build_job

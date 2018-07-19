@@ -1,0 +1,15 @@
+final ignore = ['alpha', 'beta', 'rc', 'cr', 'm', 'build-snapshot']
+dependencyUpdates.resolutionStrategy = {
+  componentSelection { rules ->
+    rules.all { ComponentSelection selection ->
+      String candidateVersion = selection.candidate.version.toLowerCase()
+      boolean rejected = ignore.any { qualifier ->
+        candidateVersion ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+      }
+      //println "candidate= $selection.candidate  version= $candidateVersion  check= $rejected"
+      if (rejected) {
+        selection.reject('Release candidate')
+      }
+    }
+  }
+}
