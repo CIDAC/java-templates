@@ -52,6 +52,11 @@ To stop the containers run:
 docker-compose down
 ```
 
+**What happens:**
+
+1. Starts Postgresql and waits up to 15 seconds for it to finish ([using wait-for-it](https://github.com/vishnubob/wait-for-it))
+2. Starts Spring boot application which populates database with some test data
+
 #### 2.1.2 Testing the Application
 
 > Navigate to <http://localhost:8080> and you should see:
